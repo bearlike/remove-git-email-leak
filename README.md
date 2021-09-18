@@ -1,2 +1,2 @@
-# find-fix-git-email-leak
+# Find and Fix Git Email Leak
 Find and Fix publicly accessible commit email addresses.
