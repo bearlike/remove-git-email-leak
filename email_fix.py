@@ -40,8 +40,9 @@ git push --force --tags origin HEAD:{default_branch}"""
 
 def main():
     repos = []
-    print(Fore.YELLOW, "!! User must have write permissions for the repositories !!", Style.RESET_ALL)
-    print(Fore.YELLOW, "!! Works only on parent/root branch !!", Style.RESET_ALL)
+    print(Fore.YELLOW, "!! User must have write permissions for the \
+        repositories !!", Style.RESET_ALL)
+    print(Fore.YELLOW, "!! Works only on parent branch !!", Style.RESET_ALL)
     print(Fore.YELLOW, "!! Commit hashes can be changed !!", Style.RESET_ALL)
     for org in orgs:
         org = org.strip()
@@ -60,8 +61,8 @@ def main():
         progress_str = "{count} out of {tot} ({repo}) ....".format(
             count=count, tot=tot, repo=repo[0])
         print(Fore.RED+Back.BLACK, progress_str, Style.RESET_ALL)
-        clone = f"git clone https://{username}:{token}@github.com/{repo[0]}.git"
-        system(clone)
+        cln = f"git clone https://{username}:{token}@github.com/{repo[0]}.git"
+        system(cln)
         email_fix = git_fix.format(
             old_email=old_email,
             correct_name=correct_name,
