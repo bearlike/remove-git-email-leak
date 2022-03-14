@@ -6,7 +6,8 @@
 
 <p align="center">
   <a href="https://www.python.org"><img src="https://img.shields.io/badge/language-python-blue.svg?style=flat"></a>
-  <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat"></a>
+  <img src="https://img.shields.io/badge/run%20on-Linux-orange?logo=linux&style=flat" />
 </p>
 
 GitHub uses your commit email address to associate commits with your GitHub account. When a user makes commits to a public repository, their email address is pushed with the commit. 
@@ -18,8 +19,9 @@ However, any commits you made before changing your commit email address are stil
 ## Getting Started
 
 ### Prerequisites
+- This `email_fix.py` script is meant to run on Linux. If you're using Windows 10 and above, I recommend running [Ubuntu](https://ubuntu.com/wsl) via WSL. You can follow the [documentation from Microsoft to install WSL](https://docs.microsoft.com/en-us/windows/wsl/install). 
 What things you need to run the program:
-- Python3 Compiler
+- [Python3](https://www.python.org/) and PIP can be installed using `APT package manager` by running `sudo apt install python3 python3-pip`
 - Install the following Packages from PyPi by using the following commands:
   - ```bash
     $ pip3 install -r requirements.txt
@@ -41,7 +43,9 @@ What things you need to run the program:
 
 ### Notes
 - The script does not preserve the `SHA1`s for previous tags, versions and objects. 
-- Currently, works only on the parent or root branch (`master`, `main`, etc). Will increase the scope to other branches if I have the time.
+- The `retrieve_email.py` uses GitHub Events API to scan for leaked email(s) which limits scanning upto 100 recent results per page
+- `TODO` Each Git commits needs to be scanned for email(s). This will also increase coverage for git repositories outside GitHub.
+- `TODO` Currently, works only on the `HEAD` or parent branch (`master`, `main`, etc). Will increase the scope to other branches if I have the time.
 
 ### Acknowledgments
 - Hat tip to anyone whose code was used.
@@ -51,8 +55,6 @@ What things you need to run the program:
 I shall not be liable for any consequential, incidental, direct, indirect, special, or other damages whatsoever (including, without limitation, damages for loss of business profits, business interruption, loss of business information, or other pecuniary loss). Run this at your own risk.  
 ```
 
-
- 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/bearlike">Krishnakanth Alagiri</a>
+  Made with ❤️ by <a href="https://kanth.tech/github">Krishnakanth Alagiri</a>
 </p>

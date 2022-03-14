@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Find (Almost) Any GitHub User's Email Address
+# Find (Almost) Any GitHub User's Email Address using GitHub Events API
 # Repo: https://github.com/bearlike/find-fix-git-email-leak
 
 import requests
@@ -29,7 +29,8 @@ def main():
     print(Fore.YELLOW, "\nSearching in", orgs, "\n", Style.RESET_ALL)
     for org in orgs:
         org = org.strip()
-        query_url = f"https://api.github.com/users/{org}/events".format(org)
+        query_url = f"https://api.github.com/users/{org}/events?per_page=100".format(
+            org)
         headers = {'Authorization': f'token {token}'}
         r = requests.get(query_url, headers=headers)
         objects = r.json()
