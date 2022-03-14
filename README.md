@@ -6,7 +6,8 @@
 
 <p align="center">
   <a href="https://www.python.org"><img src="https://img.shields.io/badge/language-python-blue.svg?style=flat"></a>
-  <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat"></a>
+  <img src="https://img.shields.io/badge/run%20on-Ubuntu-orange?logo=ubuntu&style=flat" />
 </p>
 
 GitHub uses your commit email address to associate commits with your GitHub account. When a user makes commits to a public repository, their email address is pushed with the commit. 
@@ -18,8 +19,9 @@ However, any commits you made before changing your commit email address are stil
 ## Getting Started
 
 ### Prerequisites
+- This script is meant to run on Linux. If you're using Windows 10 and above, I recommend running [Ubuntu](https://ubuntu.com/wsl) via WSL. You can follow the [documentation from Microsoft to install WSL](https://docs.microsoft.com/en-us/windows/wsl/install). 
 What things you need to run the program:
-- Python3 Compiler
+- [Python3](https://www.python.org/) and PIP can be installed using `APT package manager` using `sudo apt install python3 python3-pip`
 - Install the following Packages from PyPi by using the following commands:
   - ```bash
     $ pip3 install -r requirements.txt
