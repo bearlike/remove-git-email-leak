@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # Fix GitHub User's Email Address leak through commits
 # Repo: https://github.com/bearlike/find-fix-git-email-leak
-import requests
-from os import system, environ, chdir
 from colorama import Back, Style, Fore
-from shutil import rmtree
+from os import system, environ, chdir
 from dotenv import load_dotenv
+from shutil import rmtree
+from sys import platform
+import requests
 
 load_dotenv()
 
@@ -14,7 +15,7 @@ username = environ["GH_USERNAME"]
 token = environ["GH_TOKEN"]
 orgs = environ["ORGS"].split(",")
 
-# Fixes
+# Used to replace the leaked info
 old_email = environ["OLD_EMAIL"]
 correct_name = environ["CORRECT_NAME"]
 correct_email = environ["CORRECT_EMAIL"]
@@ -22,6 +23,7 @@ correct_email = environ["CORRECT_EMAIL"]
 # To supress git fliter warning
 environ["FILTER_BRANCH_SQUELCH_WARNING"] = "1"
 
+# This command will be formatted later
 git_fix = """
 git filter-branch --env-filter '
 if [ "$GIT_COMMITTER_EMAIL" = "{old_email}" ]
@@ -78,4 +80,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if platform != "win32":
+        main()
+    else:
+        print(Fore.RED, "This Script does not run on Windows.",
+              "Refer to documentation.", Style.RESET_ALL)
