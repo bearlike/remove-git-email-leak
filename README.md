@@ -1,8 +1,8 @@
 <h1 align="center">
-  Find and Fix Git Email Leak
+  Remove Leaked Git Emails
 </h1>
 
-<h4 align="center">Find and Fix publicly accessible commit email addresses.</h4>
+<h4 align="center">Find and remove publicly accessible git commit email addresses.</h4>
 
 <p align="center">
   <a href="https://www.python.org"><img src="https://img.shields.io/badge/language-python-blue.svg?style=flat"></a>
@@ -21,21 +21,23 @@ However, any commits you made before changing your commit email address are stil
 ### Prerequisites
 - This `email_fix.py` script is meant to run on Linux. If you're using Windows 10 and above, I recommend running [Ubuntu](https://ubuntu.com/wsl) via WSL. You can follow the [documentation from Microsoft to install WSL](https://docs.microsoft.com/en-us/windows/wsl/install). 
 What things you need to run the program:
-- [Python3](https://www.python.org/) and PIP can be installed using `APT package manager` by running `sudo apt install python3 python3-pip`
+- [Python3](https://www.python.org/) and PIP can be installed using `APT package manager` by running: 
+  ```bash
+  sudo apt install python3 python3-pip
+  ```
 - Install the following Packages from PyPi by using the following commands:
-  - ```bash
-    $ pip3 install -r requirements.txt
-    ```
+  ```bash
+  pip3 install -r requirements.txt
+  ```
 
 ### Usage
 - First, we need to generate a personal access token that will allow us to authenticate against the API. We can get one at https://github.com/settings/tokens and by clicking on *Generate new token*. Select `Repo` and `User` scopes for the token.
 - Rename `.env.sample` to `.env` and populate the appropriate values. 
 - Run `retrieve_email.py` to check for all leaked email addresses. This script uses [recent events](https://developer.github.com/v3/activity/events/) via the GitHub API to find the leaked email addresses. An example screenshot is attached:
   - ```bash
-    $ python3 retrieve_email.py
+    python3 retrieve_email.py
     ```
   -  ![Sample Run for retrieve_email.py](docs/retrieval_example.png)
-  -  
 - Once you identified the leaked email addresses, populate them back to the `.env` file.
 - Now, run `email_fix.py` to replace the committer email addresses with the `CORRECT_EMAIL` from `.env` (preferably the GitHub-provided `no-reply` email address). Changes might take up to 90 days to reflect in the GitHub Events API.
 - Repeat the process if you have multiple leaked email addresses.
