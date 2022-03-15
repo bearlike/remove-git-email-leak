@@ -1,0 +1,136 @@
+<html>
+
+<head>
+    <title>Find Email Addresses using Github Events API</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="robots" content="index, follow" />
+    <style>
+        .main-container {
+            margin: 2em;
+        }
+        
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        
+        thead th {
+            width: 25%;
+        }
+        
+        thead td {
+            font-weight: bold;
+        }
+        
+        .email_table,
+        .search,
+        .email_table {
+            margin-top: 3em;
+        }
+        
+        .main-body-1 {
+            margin-top: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <a align="center" style="text-decoration: underline white;" href="https://github.com/bearlike/remove-git-email-leak">
+            <h1>Find Email Addresses using Github Events API</h1>
+        </a>
+
+        <p align="center">
+            <a href="https://github.com/bearlike/remove-git-email-leak"><img src="https://img.shields.io/badge/GitHub Repo-Remove Git Email Leak-black.svg?logo=github&style=flat"></a>
+            <a href="https://www.python.org"><img src="https://img.shields.io/badge/language-python-blue.svg?style=flat"></a>
+            <a href="https://github.com/bearlike/remove-git-email-leak/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat"></a>
+            <img src="https://img.shields.io/badge/run%20on-Linux-orange?logo=linux&style=flat" />
+        </p>
+
+        <div class="main-body-1">
+            <p>GitHub uses your commit email address to associate commits with your GitHub account. When a user makes commits to a public repository, their email address is pushed with the commit. Search for any GitHub username below, and see if you can
+                find their email address.</p>
+            <p>If leaked email addresses are discovered, you can keep your personal email address private by using a GitHub-provided <code>no-reply</code> email address as your commit email address. GitHub provides some <a href="https://help.github.com/articles/setting-your-email-in-git/">instructions</a>                on keeping your personal email address private, but it seems that GitHub users either do not know or do not care that their email address may be exposed.</p>
+        </div>
+
+        <div class="search">
+            <div class="search-box">
+                <input id="gh_username" name="gh_username" placeholder="GitHub Username">
+                <input type="button" onclick="search_gh_email()" value="Search">
+            </div>
+        </div>
+
+        <div class="email_table">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Email Addresses from recent addresses</td>
+                    </tr>
+                </thead>
+                <tbody id="email-table-1">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+<footer align="center">
+    Made with ❤️ by <a href="https://thekrishna.in/">Krishnakanth Alagiri</a>
+</footer>
+
+<script>
+    function httpGet(theUrl) {
+        let xmlHttpReq = new XMLHttpRequest();
+        xmlHttpReq.open("GET", theUrl, false);
+        xmlHttpReq.send(null);
+        return xmlHttpReq.responseText;
+    }
+
+    function search_gh_email() {
+        var gh_username = document.getElementById("gh_username").value;
+        var page_number = 1;
+        var str = httpGet('https://api.github.com/users/' + gh_username + '/events?per_page=100&page=' + page_number);
+        const regex = /[A-Za-z.0-9+\[\]\-]+@[A-Za-z.0-9]+/mg;
+        const emails = new Set();
+        let m;
+        while ((m = regex.exec(str)) !== null) {
+            if (m.index === regex.lastIndex) {
+                regex.lastIndex++;
+            }
+            m.forEach((match, groupIndex) => {
+                emails.add(match);
+            });
+        }
+        // Delete unwanted entries and convert set to array
+        emails.delete("git@github.com");
+        let email_array = Array.from(emails);
+        // Make the Email table
+        updateTableHTML(email_array)
+    }
+
+    function updateTableHTML(email_array) {
+        var tableBody = document.getElementById("email-table-1");
+        tableBody.innerHTML = "";
+        email_array.forEach(function(row) {
+            var newRow = document.createElement("tr");
+            tableBody.appendChild(newRow);
+            if (row instanceof Array) {
+                row.forEach(function(cell) {
+                    var newCell = document.createElement("td");
+                    newCell.textContent = cell;
+                    newRow.appendChild(newCell);
+                });
+            } else {
+                newCell = document.createElement("td");
+                newCell.textContent = row;
+                newRow.appendChild(newCell);
+            }
+        });
+    }
+</script>
+
+</html>
